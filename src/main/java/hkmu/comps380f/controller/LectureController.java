@@ -1,8 +1,10 @@
 package hkmu.comps380f.controller;
 
 import hkmu.comps380f.dao.LectureRepository;
+import hkmu.comps380f.dao.PollRepository;
 import hkmu.comps380f.model.Lecture;
 import hkmu.comps380f.model.Notes;
+import hkmu.comps380f.model.Poll;
 import hkmu.comps380f.view.DownloadingView;
 import java.io.IOException;
 import java.security.Principal;
@@ -29,11 +31,15 @@ public class LectureController {
     @Resource
     private LectureRepository lectureRepo;
     private Map<Long, Lecture> lectureDatabase = new ConcurrentHashMap<>();
+    @Resource
+    private PollRepository pollRepo;
+    private Map<Long, Poll> pollDatabase = new ConcurrentHashMap<>();
 
     // Controller methods, Form object, ...
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
         model.addAttribute("lectureDatabase", lectureRepo.getLecture());
+        model.addAttribute("pollDatabase", pollRepo.getPolls());
         return "list";
     }
 

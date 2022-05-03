@@ -37,4 +37,24 @@
         <br />     
         
         <h2>Polls</h2>
+            <security:authorize access="hasRole('LECTURER')">
+                <a href="<c:url value="/course/poll/create" />">Create a Poll</a><br /><br />
+            </security:authorize>
+        <c:choose>
+            <c:when test="${fn:length(pollDatabase) == 0}">
+                
+                <i>There are no poll for the course.</i>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${pollDatabase}" var="poll">
+                    Poll ${poll.id}:
+                    <a href="<c:url value="/course/poll/${poll.id}" />">
+                        <c:out value="${poll.question}" /></a>
+                    &nbsp;
+
+                    <br />
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+       
     </body>

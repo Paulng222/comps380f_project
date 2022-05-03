@@ -43,3 +43,31 @@ CREATE TABLE notes (
  FOREIGN KEY (lecture_id) REFERENCES lecture(id)
 );
 
+CREATE TABLE polls (
+    id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    question VARCHAR(50) NOT NULL, 
+    option1 VARCHAR(50) NOT NULL,
+    option2 VARCHAR(50) NOT NULL,
+    option3 VARCHAR(50) NOT NULL,
+    option4 VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE votes (
+    id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    poll_id INTEGER NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    voteOption INTEGER NOT NULL,
+    created_at TIMESTAMP,
+    FOREIGN KEY (poll_id) REFERENCES polls(id)
+);
+
+CREATE TABLE poll_comments (
+    id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    poll_id INTEGER NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    content VARCHAR(250),
+    PRIMARY KEY (id),
+    FOREIGN KEY (poll_id) REFERENCES polls(id)
+);
+
+INSERT INTO polls (question, option1, option2, option3, option4) VALUES ('how are you?','Good', 'fine', 'bad', 'IDK');
