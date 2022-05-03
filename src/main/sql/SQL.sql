@@ -71,3 +71,13 @@ CREATE TABLE poll_comments (
 );
 
 INSERT INTO polls (question, option1, option2, option3, option4) VALUES ('how are you?','Good', 'fine', 'bad', 'IDK');
+
+CREATE TABLE lecture_comments (
+    id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    lectureComment_id INTEGER NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    comment VARCHAR(250),
+    creatTime VARCHAR(250) NOT NULL,
+    PRIMARY KEY (id)
+    
+);

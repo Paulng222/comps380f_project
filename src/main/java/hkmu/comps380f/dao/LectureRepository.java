@@ -1,12 +1,11 @@
 package hkmu.comps380f.dao;
 
-
 import hkmu.comps380f.model.Lecture;
+import hkmu.comps380f.model.LectureComment;
 import hkmu.comps380f.model.Notes;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
-
 
 public interface LectureRepository {
 
@@ -25,5 +24,10 @@ public interface LectureRepository {
     public void deleteNotes(long lectureId, String name);
 
     public Notes getNotes(long lectureId, String name);
-}
 
+    public long createLectureComment(long commentId, String username, String comment) throws IOException;
+
+    public void deleteLectureComment(long commentId);
+
+    public List<LectureComment> getLectureComment(long id);
+}

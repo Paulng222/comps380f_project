@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Online Course</title>
+        <title>Edit Lecture</title>
     </head>
     <body>
        

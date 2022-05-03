@@ -3,6 +3,7 @@ package hkmu.comps380f.controller;
 import hkmu.comps380f.dao.LectureRepository;
 import hkmu.comps380f.dao.PollRepository;
 import hkmu.comps380f.model.Lecture;
+import hkmu.comps380f.model.LectureComment;
 import hkmu.comps380f.model.Notes;
 import hkmu.comps380f.model.Poll;
 import hkmu.comps380f.view.DownloadingView;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +56,6 @@ public class LectureController {
         private String body;
         private List<MultipartFile> notes;
 
-        // Getters and Setters of subject, body, attachments
         public String getSubject() {
             return subject;
         }
@@ -90,11 +91,14 @@ public class LectureController {
     @GetMapping("/viewLecture/lectureId={lectureId}")
     public String viewLecture(@PathVariable("lectureId") long lectureId, ModelMap model) {
         List<Lecture> lecture = lectureRepo.getLecture(lectureId);
+        List<LectureComment> comments = lectureRepo.getLectureComment(lectureId);
+  
         if (lecture.isEmpty()) {
             return "redirect:/course/list";
         }
         model.addAttribute("lectureId", lectureId);
         model.addAttribute("lecture", lecture.get(0));
+        model.addAttribute("lectureComment", comments);
         return "viewLecture";
     }
 
@@ -162,4 +166,32 @@ public class LectureController {
         lectureRepo.deleteLecture(lectureId);
         return "redirect:/course/list";
     }
+
+    public static class LectureCommentForm {
+
+        private String comment;
+
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
+
+    }
+
+    @GetMapping("/lectureId={lectureId}/createLectureComment")
+    public ModelAndView createLectureComment() {
+        return new ModelAndView("addLectureComment", "lectureCommentForm", new LectureCommentForm());
+    }
+
+    @PostMapping("/lectureId={lectureId}/createLectureComment")
+    public String createLectureComment(@PathVariable("lectureId") long lectureId,
+            @ModelAttribute("lectureCommentForm") LectureCommentForm form,
+            Principal principal) throws IOException {
+        lectureRepo.createLectureComment(lectureId, principal.getName(), form.getComment());
+        return "redirect:/course/viewLecture/lectureId={lectureId}";
+    }
+
 }

@@ -1,7 +1,8 @@
 package hkmu.comps380f.dao;
 
-
+import static com.oracle.wls.shaded.org.apache.xalan.lib.ExsltDatetime.time;
 import hkmu.comps380f.model.Lecture;
+import hkmu.comps380f.model.LectureComment;
 import hkmu.comps380f.model.Notes;
 import java.io.IOException;
 import java.sql.Blob;
@@ -10,7 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +34,6 @@ import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 
 @Repository("LectureRepositoryImpl")
 public class LectureRepositoryImpl implements LectureRepository {
@@ -131,7 +134,7 @@ public class LectureRepositoryImpl implements LectureRepository {
         return jdbcOp.query(SQL_SELECT_Lecture, new LectureExtractor(), id);
     }
 
-  @Override
+    @Override
     @Transactional
     public void updateLecture(long lecture_id, String subject, String body,
             List<MultipartFile> notes) throws IOException {
@@ -166,7 +169,6 @@ public class LectureRepositoryImpl implements LectureRepository {
         System.out.println("Lecture " + id + " deleted");
     }
 
-  
     @Override
     @Transactional
     public void deleteNotes(long lectureId, String name) {
@@ -196,6 +198,70 @@ public class LectureRepositoryImpl implements LectureRepository {
     public Notes getNotes(long lectureId, String name) {
         final String SQL_SELECT_Notes = "select * from notes where lecture_id=? and filename=?";
         return jdbcOp.queryForObject(SQL_SELECT_Notes, new NotesRowMapper(), lectureId, name);
+    }
+
+    private static final class LectureCommentExtractor implements ResultSetExtractor<List<LectureComment>> {
+
+        @Override
+        public List<LectureComment> extractData(ResultSet rs) throws SQLException, DataAccessException {
+            Map<Long, LectureComment> map = new HashMap<>();
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                LectureComment lectureComment = map.get(id);
+                if (lectureComment == null) {
+                    lectureComment = new LectureComment();
+                    lectureComment.setId(id);
+                    lectureComment.setUsername(rs.getString("username"));
+                    lectureComment.setComment(rs.getString("comment"));
+                    lectureComment.setTime(rs.getString("creatTime"));
+                    map.put(id, lectureComment);
+                }
+            }
+            return new ArrayList<>(map.values());
+        }
+    }
+
+    @Override
+    @Transactional
+    public long createLectureComment(final long lectureCommentId, final String uName, final String comment) throws IOException {
+        DateTimeFormatter dateTime= DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        final String creatTime = dateTime.format(now);
+        final String SQL_INSERT_LectureComment
+                = "insert into lecture_comments (username, comment, creatTime,lectureComment_id) values (?, ?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcOp.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection)
+                    throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(SQL_INSERT_LectureComment,
+                        new String[]{"id"});
+                ps.setString(1, uName);
+                ps.setString(2, comment);
+                ps.setString(3, creatTime);
+                ps.setLong(4, lectureCommentId);
+                return ps;
+            }
+        }, keyHolder);
+        Long lectureComment_id = keyHolder.getKey().longValue();
+        System.out.println("Lecture Comment " + lectureComment_id + " inserted");
+        return lectureComment_id;
+    }
+
+    @Override
+    @Transactional
+    public void deleteLectureComment(long commentId) {
+        final String SQL_DELETE_LectureComment = "delete from lecture_comments where id=?";
+        jdbcOp.update(SQL_DELETE_LectureComment, commentId);
+        System.out.println("Lecture comment" + commentId + " deleted");
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<LectureComment> getLectureComment(long id) {
+        final String SQL_SELECT_LectureComment = "select * from lecture_comments WHERE lectureComment_id = ?";
+        return jdbcOp.query(SQL_SELECT_LectureComment, new LectureCommentExtractor(), id);
     }
 
 }

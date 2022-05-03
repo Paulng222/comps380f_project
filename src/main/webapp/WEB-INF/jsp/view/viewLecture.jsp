@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Online Course</title>
+        <title>View Lecture</title>
     </head>
     <body>
 
@@ -27,6 +27,29 @@
             </c:forEach><br /><br /> 
         </c:if>
         <br />
+
+        <h2>Comments</h2>
+        <a href="<c:url value="/course/lectureId=${lectureId}/createLectureComment" />">Create a Comment</a><br /><br />
+        <c:choose>
+            <c:when test="${fn:length(lectureComment) == 0}">
+                <i>There are no comment for the lecture.</i>
+            </c:when>
+            <c:otherwise>
+                <table border="1">
+                    <tr><th>Username</th><th>Comment</th><th>Created Time</th>
+                            <c:forEach items="${lectureComment}" var="lectureComment">
+                        <tr>
+                            <td><c:out value="${lectureComment.username}" /></td>
+                            <td><c:out value="${lectureComment.comment}" /></td>
+                            <td><c:out value="${lectureComment.time}" /></td>
+   
+                           
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:otherwise>
+        </c:choose>
+        <br /><br /> <br />
         <a href="<c:url value="/course" />">Return to list page</a>
     </body>
 </html>
