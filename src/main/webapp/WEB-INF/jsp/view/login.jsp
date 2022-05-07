@@ -28,7 +28,7 @@
             <input type="text" path="username" /><br/><br/>
             <label path="password">Password<//label><br/>
             <input type="text" path="password" /><br/><br/>
-            <label for="roles">Roles</label><br/>
+            <label path="roles">Roles</label><br/>
             <checkbox path="roles" value="ROLE_STUDENT" />ROLE_STUDENT
            
             <br /><br />
