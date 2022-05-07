@@ -23,7 +23,17 @@
         <b:property name="password" value="nbuser" />
     </b:bean> 
 
-    <http />
+    <http>
+        <intercept-url pattern="/course/createLecture" access="hasRole('LECTURER')" />
+        <intercept-url pattern="/course/editLecture/**" access="hasRole('LECTURER')" />
+        <intercept-url pattern="/course/viewLecture/**" access="hasAnyRole('LECTURER','STUDENT')" />
+        <intercept-url pattern="/course/poll/**" access="hasAnyRole('LECTURER','STUDENT')" />
+        <form-login login-page="/cslogin" login-processing-url="/cslogin"
+                    authentication-failure-url="/cslogin?error" />
+        <logout logout-url="/cslogout" logout-success-url="/cslogin?logout"
+                invalidate-session="true" delete-cookies="JSESSIONID" />
+        <remember-me key="custSupportSecret" token-validity-seconds="86400" />
+    </http>
 
 
     <b:bean id="transactionManager"
@@ -36,7 +46,7 @@
     
     <context:component-scan base-package="hkmu.comps380f.dao" />
     
-   <authentication-manager>
+    <authentication-manager>
         <authentication-provider>
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query=

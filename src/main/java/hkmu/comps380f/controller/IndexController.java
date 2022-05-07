@@ -11,5 +11,9 @@ public class IndexController {
         return "redirect:/course/list";
     }
 
-  
+    @GetMapping("/cslogin")
+    public String login() {
+        return "login";
+    }
+
 }
