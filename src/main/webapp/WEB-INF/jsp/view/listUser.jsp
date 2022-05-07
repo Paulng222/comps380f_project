@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html><head><title>Customer Support Online User Management</title></head><body>
+<html>
+    <head>
+        <title>Customer Support Online User Management</title></head>
+    <body>
         <c:url var="logoutUrl" value="/cslogout"/>
         <form action="${logoutUrl}" method="post">
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-       
-        
+
+
         <h2>Users</h2>
         <a href="<c:url value="/user/create" />">Create a User</a><br /><br />
         <c:choose>
@@ -33,7 +36,7 @@
                     </c:forEach>
                 </table>
             </c:otherwise>
-               
+
         </c:choose>
-                 <br /><br /><a href="<c:url value="/list" />">Return to list</a>
+        <br /><br /><a href="<c:url value="/course/list" />">Return to list</a>
     </body></html>

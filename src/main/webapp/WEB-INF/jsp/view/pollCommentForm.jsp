@@ -12,6 +12,13 @@
         <title>Comment Page</title>
     </head>
     <body>
+
+        <c:url var="logoutUrl" value="/cslogout"/>
+        <form action="${logoutUrl}" method="post">
+            <input type="submit" value="Log out" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
         <h1>Comment Page</h1>
         <form:form method="POST" modelAttribute="comment">
             <form:label path="content">Your Comment</form:label><br>

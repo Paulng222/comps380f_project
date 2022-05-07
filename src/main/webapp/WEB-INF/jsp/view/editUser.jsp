@@ -4,7 +4,11 @@
         <title>Edit User</title>
     </head>
     <body>
-       
+        <c:url var="logoutUrl" value="/cslogout"/>
+        <form action="${logoutUrl}" method="post">
+            <input type="submit" value="Log out" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
 
         <h2>User ${user.username}</h2>
         <form:form method="POST" enctype="multipart/form-data" 

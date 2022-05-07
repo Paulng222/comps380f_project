@@ -5,6 +5,12 @@
     </head>
     <body>
 
+        <c:url var="logoutUrl" value="/cslogout"/>
+        <form action="${logoutUrl}" method="post">
+            <input type="submit" value="Log out" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
         <h2>Lecture ${lectureId}: <c:out value="${lecture.subject}" /></h2>
         <security:authorize access="hasRole('LECTURER') or principal.username=='${lecture.userName}'">
             [<a href="<c:url value="/course/editLecture/lectureId=${lectureId}" />">Edit</a>]
@@ -42,8 +48,8 @@
                             <td><c:out value="${lectureComment.username}" /></td>
                             <td><c:out value="${lectureComment.comment}" /></td>
                             <td><c:out value="${lectureComment.time}" /></td>
-   
-                           
+
+
                         </tr>
                     </c:forEach>
                 </table>
