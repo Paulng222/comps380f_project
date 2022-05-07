@@ -12,6 +12,12 @@
         </form>
 
         <i><h1>Comps380f Course</h1></i>
+        
+        <security:authorize access="hasRole('LECTURER')">
+            <h2>Users</h2>
+            <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
+        </security:authorize>
+
 
         <h2>Lectures</h2>
         <security:authorize access="hasRole('LECTURER')">

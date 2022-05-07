@@ -24,6 +24,7 @@
     </b:bean> 
 
     <http>
+        <intercept-url pattern="/user/**" access="hasRole('LECTURER')" /> 
         <intercept-url pattern="/course/createLecture" access="hasRole('LECTURER')" />
         <intercept-url pattern="/course/editLecture/**" access="hasRole('LECTURER')" />
         <intercept-url pattern="/course/viewLecture/**" access="hasAnyRole('LECTURER','STUDENT')" />
@@ -47,13 +48,7 @@
     <context:component-scan base-package="hkmu.comps380f.dao" />
     
     <authentication-manager>
-        <authentication-provider>
-            <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query=
-                   "SELECT username, password, true FROM users WHERE username=?"
-                               authorities-by-username-query=
-                   "SELECT username, role FROM user_roles WHERE username=?" />
-        </authentication-provider>
+        <authentication-provider user-service-ref="onlineUserService" />
     </authentication-manager>
      
 </b:beans>
