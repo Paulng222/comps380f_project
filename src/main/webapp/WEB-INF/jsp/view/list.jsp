@@ -11,6 +11,11 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
+        <c:url var="addUser" value="/user/create"/>
+        <form action="${addUser}" method="get">
+            <input type="submit" value="Reg User" />
+        </form>
+
         <i><h1>Comps380f Course</h1></i>
 
         <security:authorize access="hasRole('LECTURER')">

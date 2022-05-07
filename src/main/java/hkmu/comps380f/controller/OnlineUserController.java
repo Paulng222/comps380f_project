@@ -70,7 +70,7 @@ public class OnlineUserController {
                 form.getPassword(), form.getRoles()
         );
         onlineUserRepo.save(user);
-        return new RedirectView("/user/list", true);
+        return new RedirectView("/cslogin", true);
     }
 
     @GetMapping("/delete/{username}")

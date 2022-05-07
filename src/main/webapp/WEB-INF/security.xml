@@ -24,7 +24,7 @@
     </b:bean> 
 
     <http>
-        <intercept-url pattern="/user/**" access="hasRole('LECTURER')" /> 
+        <intercept-url pattern="/user/delete" access="hasRole('LECTURER')" /> 
         <intercept-url pattern="/course/createLecture" access="hasRole('LECTURER')" />
         <intercept-url pattern="/course/editLecture/**" access="hasRole('LECTURER')" />
         <intercept-url pattern="/course/viewLecture/**" access="hasAnyRole('LECTURER','STUDENT')" />

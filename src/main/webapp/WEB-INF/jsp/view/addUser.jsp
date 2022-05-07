@@ -7,7 +7,7 @@
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        
+
         <h2>Create a User</h2>
         <form:form method="POST" enctype="multipart/form-data" modelAttribute="onlineUser">
             <form:label path="username">Username</form:label><br/>
@@ -19,6 +19,9 @@
             <form:checkbox path="roles" value="ROLE_LECTURER" />ROLE_LECTURER
             <br /><br />
             <input type="submit" value="Add User"/>
-        </form:form>
+        </form:form
+
+        <a href="<c:url value="/course" />">Return to index</a>
+
     </body>
 </html>
