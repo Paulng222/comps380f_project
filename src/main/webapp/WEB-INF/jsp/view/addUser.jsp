@@ -19,7 +19,7 @@
             <form:checkbox path="roles" value="ROLE_LECTURER" />ROLE_LECTURER
             <br /><br />
             <input type="submit" value="Add User"/>
-        </form:form
+        </form:form>
 
         <a href="<c:url value="/course" />">Return to index</a>
 

@@ -22,18 +22,6 @@
             <input type="submit" value="Log In"/>
         </form>
 
-        <h2>Create a User</h2>
-        <form action="addUser" method="POST">
-            <label path="username">Username</label><br/>
-            <input type="text" path="username" /><br/><br/>
-            <label path="password">Password<//label><br/>
-                <input type="text" path="password" /><br/><br/>
-                <label path="roles">Roles</label><br/>
-                <checkbox path="roles" value="ROLE_STUDENT" />ROLE_STUDENT
-
-                <br /><br />
-                <input type="submit" value="Add User"/>
-        </form>
         <a href="<c:url value="/course" />">Return to index</a>
     </body>
 </html>
