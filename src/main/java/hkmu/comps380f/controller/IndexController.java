@@ -15,25 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
 
-    @Resource
-    private LectureRepository lectureRepo;
-    private Map<Long, Lecture> lectureDatabase = new ConcurrentHashMap<>();
-    @Resource
-    private PollRepository pollRepo;
-    private Map<Long, Poll> pollDatabase = new ConcurrentHashMap<>();
-
+   
     @GetMapping
     public String index() {
         return "redirect:/course/list";
     }
-
-    @GetMapping("/user/comment/list")
-    public ModelAndView userComment(Principal principal) {
-        ModelAndView commentHistoryPage = new ModelAndView("commentList");
-        commentHistoryPage.addObject("lectureComments", lectureRepo.getUserAllLectureComment(principal.getName()));
-        commentHistoryPage.addObject("pollComments", pollRepo.getUserAllPollComment(principal.getName()));
-
-        return commentHistoryPage;
+@GetMapping("/cslogin")
+    public String login() {
+        return "login";
     }
-  
 }

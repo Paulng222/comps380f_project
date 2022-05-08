@@ -60,6 +60,7 @@ public class OnlineUserController {
         private String phone;
         private String address;
 
+
         // Getters and Setters of subject, body, attachments
 
         public String getFullname() {
@@ -119,7 +120,8 @@ public class OnlineUserController {
     @PostMapping("/create")
     public View create(Form form) throws IOException {
         OnlineUser user = new OnlineUser(form.getUsername(),
-                form.getPassword(), form.getRoles()
+                form.getPassword(), form.getRoles(),
+                form.getFullname(), form.getPhone(), form.getAddress()
         );
         onlineUserRepo.save(user);
         return new RedirectView("/cslogin", true);

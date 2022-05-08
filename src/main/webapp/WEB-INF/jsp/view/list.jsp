@@ -4,18 +4,18 @@
         <title>Online Course</title>
     </head>
     <body>
-
+        <security:authorize access="hasAnyRole('LECTURER','STUDENT')">
         <c:url var="logoutUrl" value="/cslogout"/>
         <form action="${logoutUrl}" method="post">
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
+        </security:authorize>
 
         <c:url var="addUser" value="/user/create"/>
         <form action="${addUser}" method="get">
             <input type="submit" value="Reg User" />
         </form>
-
         <i><h1>Comps380f Course</h1></i>
         <security:authorize access="hasRole('LECTURER')">
             <a href="<c:url value="/course/poll/create" />">Create a Poll</a><br /><br />
