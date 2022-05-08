@@ -32,6 +32,9 @@ public class OnlineUserController {
         private String username;
         private String password;
         private String[] roles;
+        private String fullname;
+        private String phone;
+        private String address;
 
         public String getUsername() {
             return username;
@@ -57,6 +60,30 @@ public class OnlineUserController {
             this.roles = roles;
         }
 
+        public String getFullname() {
+            return fullname;
+        }
+
+        public void setFullname(String fullname) {
+            this.fullname = fullname;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
     }
 
     @GetMapping("/create")
@@ -67,7 +94,8 @@ public class OnlineUserController {
     @PostMapping("/create")
     public View create(Form form) throws IOException {
         OnlineUser user = new OnlineUser(form.getUsername(),
-                form.getPassword(), form.getRoles()
+                form.getPassword(), form.getRoles(),
+                form.getFullname(), form.getPhone(), form.getAddress()
         );
         onlineUserRepo.save(user);
         return new RedirectView("/cslogin", true);

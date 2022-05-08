@@ -17,6 +17,12 @@
             <form:label path="roles">Roles</form:label><br/>
             <form:checkbox path="roles" value="ROLE_STUDENT" />ROLE_STUDENT
             <form:checkbox path="roles" value="ROLE_LECTURER" />ROLE_LECTURER
+            <form:label path="fullname">Full name</form:label><br/>
+            <form:input type="text" path="fullname" /><br/><br/>
+            <form:label path="phone">Phone number</form:label><br/>
+            <form:input type="text" path="phone" /><br/><br/>
+            <form:label path="address">Address</form:label><br/>
+            <form:input type="text" path="address" /><br/><br/>
             <br /><br />
             <input type="submit" value="Add User"/>
         </form:form>

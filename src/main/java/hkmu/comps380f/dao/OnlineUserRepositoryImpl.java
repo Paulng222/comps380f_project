@@ -54,6 +54,13 @@ public class OnlineUserRepositoryImpl implements OnlineUserRepository {
                 = "insert into users (username, password) values (?, ?)";
         final String SQL_INSERT_ROLE
                 = "insert into user_roles (username, role) values (?, ?)";
+        final String SQL_INSERT_FULLNAME
+                = "insert into users_info (username, fullname) values (?, ?)";
+        final String SQL_INSERT_PHONE
+                = "insert into users_info (username, phone) values (?, ?)";
+        final String SQL_INSERT_ADDRESS
+                = "insert into users_info (username, address) values (?, ?)";
+
         jdbcOp.update(SQL_INSERT_USER, user.getUsername(), user.getPassword());
         System.out.println("User " + user.getUsername() + " inserted");
         for (String role : user.getRoles()) {
@@ -61,6 +68,12 @@ public class OnlineUserRepositoryImpl implements OnlineUserRepository {
             System.out.println("User_role " + role + " of user "
                     + user.getUsername() + " inserted");
         }
+        jdbcOp.update(SQL_INSERT_FULLNAME, user.getUsername(), user.getFullname());
+        System.out.println("User_fullname" + user.getUsername() + " inserted");
+        jdbcOp.update(SQL_INSERT_PHONE, user.getUsername(), user.getPhone());
+        System.out.println("User_phone" + user.getUsername() + " inserted");
+        jdbcOp.update(SQL_INSERT_ADDRESS, user.getUsername(), user.getAddress());
+        System.out.println("User_address" + user.getAddress() + " inserted");
     }
 
     @Override

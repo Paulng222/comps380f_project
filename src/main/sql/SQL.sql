@@ -4,6 +4,14 @@ CREATE TABLE users (
     PRIMARY KEY (username)
 );
 
+CREATE TABLE users_info (
+    username VARCHAR(50) NOT NULL,
+    fullname VARCHAR(50) ,
+    phone VARCHAR(50) ,
+    address VARCHAR(150) ,
+    FOREIGN KEY (fullname) REFERENCES users(username)
+);
+
 CREATE TABLE user_roles (
     user_role_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     username VARCHAR(50) NOT NULL,
