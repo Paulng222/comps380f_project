@@ -51,29 +51,26 @@ public class OnlineUserRepositoryImpl implements OnlineUserRepository {
     @Transactional
     public void save(OnlineUser user) {
         final String SQL_INSERT_USER
-                = "insert into users (username, password) values (?, ?)";
+                = "insert into users (username, password, fullname, phone, address) values (?, ?, ?, ?, ?)";
         final String SQL_INSERT_ROLE
                 = "insert into user_roles (username, role) values (?, ?)";
-        final String SQL_INSERT_FULLNAME
-                = "insert into users_info (username, fullname) values (?, ?)";
-        final String SQL_INSERT_PHONE
-                = "insert into users_info (username, phone) values (?, ?)";
-        final String SQL_INSERT_ADDRESS
-                = "insert into users_info (username, address) values (?, ?)";
 
-        jdbcOp.update(SQL_INSERT_USER, user.getUsername(), user.getPassword());
+        jdbcOp.update(SQL_INSERT_USER, user.getUsername(), user.getPassword(), user.getFullname(), user.getPhone(), user.getAddress());
         System.out.println("User " + user.getUsername() + " inserted");
         for (String role : user.getRoles()) {
             jdbcOp.update(SQL_INSERT_ROLE, user.getUsername(), role);
             System.out.println("User_role " + role + " of user "
                     + user.getUsername() + " inserted");
         }
-        jdbcOp.update(SQL_INSERT_FULLNAME, user.getUsername(), user.getFullname());
+/*
+        jdbcOp.update(SQL_INSERT_USER, user.getUsername(), user.getFullname());
         System.out.println("User_fullname" + user.getUsername() + " inserted");
-        jdbcOp.update(SQL_INSERT_PHONE, user.getUsername(), user.getPhone());
+        jdbcOp.update(SQL_INSERT_USER, user.getUsername(), user.getPhone());
         System.out.println("User_phone" + user.getUsername() + " inserted");
-        jdbcOp.update(SQL_INSERT_ADDRESS, user.getUsername(), user.getAddress());
+        jdbcOp.update(SQL_INSERT_USER, user.getUsername(), user.getAddress());
         System.out.println("User_address" + user.getAddress() + " inserted");
+*/
+
     }
 
     @Override

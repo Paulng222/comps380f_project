@@ -1,15 +1,10 @@
 CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
-    PRIMARY KEY (username)
-);
-
-CREATE TABLE users_info (
-    username VARCHAR(50) NOT NULL,
     fullname VARCHAR(50) ,
     phone VARCHAR(50) ,
     address VARCHAR(150) ,
-    FOREIGN KEY (fullname) REFERENCES users(username)
+    PRIMARY KEY (username)
 );
 
 CREATE TABLE user_roles (
@@ -20,14 +15,14 @@ CREATE TABLE user_roles (
     FOREIGN KEY (username) REFERENCES users(username)
 );
 
-INSERT INTO users VALUES ('sam', '{noop}sampw');
+INSERT INTO users(username,password) VALUES ('sam', '{noop}sampw');
 INSERT INTO user_roles(username, role) VALUES ('sam', 'ROLE_STUDENT');
 INSERT INTO user_roles(username, role) VALUES ('sam', 'ROLE_LECTURER');
 
-INSERT INTO users VALUES ('john', '{noop}johnpw');
+INSERT INTO users(username,password) VALUES ('john', '{noop}johnpw');
 INSERT INTO user_roles(username, role) VALUES ('john', 'ROLE_LECTURER');
 
-INSERT INTO users VALUES ('peter', '{noop}peterpw');
+INSERT INTO users(username,password) VALUES ('peter', '{noop}peterpw');
 INSERT INTO user_roles(username, role) VALUES ('peter', 'ROLE_STUDENT');
 
 
