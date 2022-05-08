@@ -5,6 +5,7 @@
 package hkmu.comps380f.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -19,6 +20,7 @@ public class PollComment implements Serializable{
     private String username;
     private String content;
     private long pollId;
+    private Date createdAt;
 
     
     public PollComment(){}
@@ -57,6 +59,14 @@ public class PollComment implements Serializable{
 
     public void setPollId(long pollId) {
         this.pollId = pollId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
   

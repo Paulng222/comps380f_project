@@ -39,6 +39,9 @@ public class OnlineUserRepositoryImpl implements OnlineUserRepository {
                     user = new OnlineUser();
                     user.setUsername(username);
                     user.setPassword(rs.getString("password"));
+                    user.setAddress(rs.getString("address"));
+                    user.setPhone(rs.getString("phone"));
+                    user.setFullname(rs.getString("fullname"));
                     map.put(username, user);
                 }
                 user.getRoles().add(rs.getString("role"));
@@ -90,4 +93,28 @@ public class OnlineUserRepositoryImpl implements OnlineUserRepository {
         jdbcOp.update(SQL_DELETE_ROLES, username);
         jdbcOp.update(SQL_DELETE_USER, username);
     }
+
+    @Override
+    @Transactional
+    public void edit(String username, String password, String fullname, String[] roles, String address, String phone, String oldUsername) {
+        final String SQL_DELETE_ROLES = "delete from user_roles where username=?";
+        final String SQL_UPDATE_USER
+                = "UPDATE users SET username = ?, password = ?, fullname = ?, address = ?, phone = ? WHERE username = ?";
+        final String SQL_UPDATE_ROLE
+                = "INSERT INTO user_roles (username, role) values (?, ?)";
+        jdbcOp.update(SQL_DELETE_ROLES, oldUsername);
+        
+        for (String role : roles) {
+            jdbcOp.update(SQL_UPDATE_ROLE, username, role);
+            System.out.println("User_role " + role + " of user "
+                    + username + " inserted");
+        }
+jdbcOp.update(SQL_UPDATE_USER, username, password, fullname, address, phone, oldUsername);
+        System.out.println("User " + username + fullname+" inserted");
+        
+    }
+
+    
+    
+
 }

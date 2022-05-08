@@ -1,8 +1,3 @@
-<%-- 
-    Document   : poll
-    Created on : Mar 22, 2022, 5:10:56 PM
-    Author     : emilylau
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -75,6 +70,7 @@
            </c:url>">
             Create comment
         </a>
+        
         <c:choose>
             <c:when test="${empty comments}">
                 <p>No comments</p> 

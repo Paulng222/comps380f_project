@@ -264,4 +264,11 @@ public class LectureRepositoryImpl implements LectureRepository {
         return jdbcOp.query(SQL_SELECT_LectureComment, new LectureCommentExtractor(), id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<LectureComment> getUserAllLectureComment(String username) {
+        final String SQL_SELECT_ALL_LectureComment = "select * from lecture_comments WHERE username = ?";
+        return jdbcOp.query(SQL_SELECT_ALL_LectureComment, new LectureCommentExtractor(), username);
+    }
+
 }

@@ -18,25 +18,38 @@
             </c:when>
             <c:otherwise>
                 <table>
-                    <tr><th>Username</th><th>Password</th><th>Roles</th><th>Action</th></tr>
-                            <c:forEach items="${onlineUsers}" var="user">
-                        <tr>
-                            <td>${user.username}</td><td>${user.password}</td>
-                            <td>
-                                <c:forEach items="${user.roles}" var="role" varStatus="status">
-                                    <c:if test="${!status.first}">, </c:if>
-                                    ${role}
-                                </c:forEach>
-                            </td>
-                            <td>
-                                [<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]
-                                [<a href="<c:url value="/course/editLecture/lectureId=${lectureId}" />">Edit</a>]
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:otherwise>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Roles</th>
+                <th>Action</th>
+            </tr>
+                    <c:forEach items="${onlineUsers}" var="user">
+                <tr>
+                    <td><a href="<c:url value="/user/list/${user.username}" />">
+                        <c:out value="${user.username}" /></a></td>
+                    <td>${user.password}</td>
+                    <td>
+                    
+                    <security:authorize access="hasRole('LECTURER') or
+                                        principal.username=='${user.username}'">
+                        [<a href="<c:url value="/user/edit/${user.username}" />">Edit</a>]
+                    </security:authorize>
+                        </td>
+                        <td>
+                    <security:authorize access="hasRole('LECTURER')">
+                        [<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]
+                    </security:authorize>
+                </td>
+                 </tr>
+                 </table>
+                </c:forEach>
+        </c:otherwise>
+    </c:choose>
 
-        </c:choose>
-        <br /><br /><a href="<c:url value="/course/list" />">Return to list</a>
-    </body></html>
+
+
+
+
+    <br /><br /><a href="<c:url value="/course/list" />">Return to list</a>
+</body></html>

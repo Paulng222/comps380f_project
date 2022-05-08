@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 public class OnlineUserService implements UserDetailsService {
 
     @Resource
-    OnlineUserRepository ticketUserRepo;
+    OnlineUserRepository onlineUserRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        List<OnlineUser> users = ticketUserRepo.findById(username);
+        List<OnlineUser> users = onlineUserRepo.findById(username);
         if (users.isEmpty()) {
             throw new UsernameNotFoundException("User '" + username + "' not found.");
         }

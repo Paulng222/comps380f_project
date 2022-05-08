@@ -4,13 +4,12 @@
         <title>Online Course</title>
     </head>
     <body>
-        <security:authorize access="hasAnyRole('LECTURER','STUDENT')">
+
         <c:url var="logoutUrl" value="/cslogout"/>
         <form action="${logoutUrl}" method="post">
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        </security:authorize>
 
         <c:url var="addUser" value="/user/create"/>
         <form action="${addUser}" method="get">
@@ -18,7 +17,10 @@
         </form>
 
         <i><h1>Comps380f Course</h1></i>
-
+        <security:authorize access="hasRole('LECTURER')">
+            <a href="<c:url value="/course/poll/create" />">Create a Poll</a><br /><br />
+        </security:authorize>
+            
         <security:authorize access="hasRole('LECTURER')">
             <h2>Users</h2>
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
@@ -26,8 +28,8 @@
 
 
         <h2>Lectures</h2>
-        <security:authorize access="hasRole('LECTURER')">
-            <a href="<c:url value="/course/createLecture" />">Create a Lecture</a><br /><br />
+        <security:authorize access="hasAnyRole('LECTURER','STUDENT')">
+            <a href="<c:url value="/user/comment/list" />">Comment History</a><br /><br />
         </security:authorize>
 
         <c:choose>

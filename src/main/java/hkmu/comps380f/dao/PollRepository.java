@@ -17,9 +17,6 @@ public interface PollRepository {
 
     public List<Poll> getPollById(long id);
 
-    //public void updateLecture(long lecture_id, String subject, String body,
-    //        List<MultipartFile> notes) throws IOException;
-
     public void deletePoll(long id);
 
     public Integer[] getTotalVotesOfPoll(long id);
@@ -34,8 +31,6 @@ public interface PollRepository {
 
     public List<PollComment> getPollComment(long id);
 
-    //public void deleteNotes(long lectureId, String name);
-
-    //public Notes getNotes(long lectureId, String name);
+    public List<PollComment> getUserAllPollComment(String username);
 }
 

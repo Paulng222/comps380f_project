@@ -13,4 +13,6 @@ public interface OnlineUserRepository {
 
     public void delete(String username);
 
+    public void edit(String username, String password, String fullname, String[] roles, String address, String phone, String oldUsername);
+
 }
