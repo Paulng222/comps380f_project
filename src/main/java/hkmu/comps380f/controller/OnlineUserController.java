@@ -128,7 +128,7 @@ public class OnlineUserController {
     }
 
     @GetMapping("/delete/{username}")
-    public View deleteTicket(@PathVariable("username") String username) {
+    public View deleteUser(@PathVariable("username") String username) {
         onlineUserRepo.delete(username);
         return new RedirectView("/user/list", true);
     }

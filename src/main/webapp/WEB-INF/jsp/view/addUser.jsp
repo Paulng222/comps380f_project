@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head><title>Customer Support</title></head>
+    <head><title>Create User</title></head>
     <body>
         <c:url var="logoutUrl" value="/cslogout"/>
         <form action="${logoutUrl}" method="post">

@@ -33,7 +33,7 @@
                     authentication-failure-url="/cslogin?error" />
         <logout logout-url="/cslogout" logout-success-url="/cslogin?logout"
                 invalidate-session="true" delete-cookies="JSESSIONID" />
-        <remember-me key="custSupportSecret" token-validity-seconds="86400" />
+        <remember-me key="onlineCourseSecret" token-validity-seconds="86400" />
     </http>
 
 

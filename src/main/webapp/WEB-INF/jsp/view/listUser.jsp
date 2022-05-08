@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support Online User Management</title></head>
+        <title>Online Course User Management</title></head>
     <body>
         <c:url var="logoutUrl" value="/cslogout"/>
         <form action="${logoutUrl}" method="post">

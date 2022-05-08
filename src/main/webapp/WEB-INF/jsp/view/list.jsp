@@ -29,8 +29,10 @@
 
 
         <h2>Lectures</h2>
-        
-
+        <security:authorize access="hasRole('LECTURER') or
+                            principal.username=='${lecture.userName}'">
+            <a href="<c:url value="/course/createLecture" />">Create a Lecture</a><br /><br />
+        </security:authorize>
         <c:choose>
             <c:when test="${fn:length(lectureDatabase) == 0}">
                 <i>There are no lecture for the course.</i>
