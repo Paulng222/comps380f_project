@@ -13,34 +13,28 @@
     </head>
     <style>
         table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
+          border: 1px solid black;
+          border-collapse: collapse;
         }
         th, td {
-            padding: 5px;
+          padding: 5px;
         }
     </style>
     <body>
-        <c:url var="logoutUrl" value="/cslogout"/>
-        <form action="${logoutUrl}" method="post">
-            <input type="submit" value="Log out" />
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-
         <a href="<c:url value="/">
-           </c:url>"><c:out value="to Index" /></a><br />
-
-
+                </c:url>"><c:out value="to Index" /></a><br />
+                
+                
         <security:authorize access="hasRole('LECTURER')">
             <a href="<c:url value="/course/poll/${pollId}/delete">
-               </c:url>"><c:out value="Delete this Poll" /></a><br />
+            </c:url>"><c:out value="Delete this Poll" /></a><br />
         </security:authorize>
-
+        
         <h1>Poll ${pollId} question: ${question}</h1>
-
+     
         <c:url var="vote_url"  value="/course/poll/${pollId}/vote" />
-
-
+            
+        
         <form:form mehtod="POST" action="${vote_url}" modelAttribute="vote" >
             <form:radiobutton  path="voteOption" value="1" checked="${voteOption eq 1 ? 'checked' : ''}" />${option1}(${voteOptionTotal[0]})<br>
             <form:radiobutton  path="voteOption" value="2" checked="${voteOption eq 2 ? 'checked' : ''}" />${option2}(${voteOptionTotal[1]})<br>
@@ -48,10 +42,10 @@
             <form:radiobutton  path="voteOption" value="4" checked="${voteOption eq 4 ? 'checked' : ''}" />${option4}(${voteOptionTotal[3]})<br>
             <input type="submit" value="Vote"></input><br>
         </form:form>
-
-        <c:choose>
+            
+            <c:choose>
             <c:when test="${empty histories}">
-                <p>No vote histories</p> 
+               <p>No vote histories</p> 
             </c:when>
             <c:otherwise>
                 <table>
@@ -63,31 +57,31 @@
                         <tr>
                             <td>${history.getVoteOption()} </td>
                             <td>${history.getCreatedAt()} </td>
-
+                            
                         </tr>
                     </c:forEach>
-                </table>  
+                 </table>  
             </c:otherwise>
         </c:choose>
-
+            
         <h2>Comments</h2>
         <a href="<c:url value="/course/poll/${pollId}/comment/create">            
-           </c:url>">
+        </c:url>">
             Create comment
         </a>
         <c:choose>
             <c:when test="${empty comments}">
-                <p>No comments</p> 
+               <p>No comments</p> 
             </c:when>
             <c:otherwise>
                 <table>
                     <tr>
                         <th>Users</th>
                         <th>Comments</th>
-                            <security:authorize access="hasRole('LECTURER')">
+                        <security:authorize access="hasRole('LECTURER')">
                             <th>Delete</th>
-                            </security:authorize>
-
+                        </security:authorize>
+                        
                     </tr>
                     <c:forEach var="comment" items="${comments}">
                         <tr>
@@ -101,7 +95,7 @@
                             </security:authorize>
                         </tr>
                     </c:forEach>
-                </table>  
+                 </table>  
             </c:otherwise>
         </c:choose>
     </body>

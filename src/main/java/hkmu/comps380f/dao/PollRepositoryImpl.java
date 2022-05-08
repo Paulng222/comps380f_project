@@ -227,6 +227,7 @@ public class PollRepositoryImpl implements PollRepository {
                 PollComment pollComment = map.get(id);
                 if (pollComment == null) {
                     pollComment = new PollComment(rs.getString("username"), rs.getString("content"));
+                    pollComment.setCreatedAt(new Timestamp(rs.getTimestamp("created_at").getTime()));
                     pollComment.setId(id);
                     map.put(id, pollComment);
                 }
@@ -276,36 +277,10 @@ public class PollRepositoryImpl implements PollRepository {
         System.out.println("Poll Comment #" + id + " deleted");
     }
 
-  /*
     @Override
-    @Transactional
-    public void deleteNotes(long lectureId, String name) {
-        final String SQL_DELETE_Notes
-                = "delete from notes where lecture_id=? and filename=?";
-        jdbcOp.update(SQL_DELETE_Notes, lectureId, name);
-        System.out.println("Notes " + name + " of Lecture " + lectureId + " deleted");
+    @Transactional(readOnly = true)
+    public List<PollComment> getUserAllPollComment(String username) {
+        final String SQL_SELECT_ALL_PollComment = "select * from poll_comments WHERE username = ?";
+        return jdbcOp.query(SQL_SELECT_ALL_PollComment, new PollCommentExtractor(), username);
     }
-
-    private static final class NotesRowMapper implements RowMapper<Notes> {
-
-        @Override
-        public Notes mapRow(ResultSet rs, int i) throws SQLException {
-            Notes entry = new Notes();
-            entry.setName(rs.getString("filename"));
-            entry.setMimeContentType(rs.getString("content_type"));
-            Blob blob = rs.getBlob("content");
-            byte[] bytes = blob.getBytes(1l, (int) blob.length());
-            entry.setContents(bytes);
-            entry.setLectureId(rs.getInt("lecture_id"));
-            return entry;
-        }
-    }
-
-    @Override
-    @Transactional
-    public Notes getNotes(long lectureId, String name) {
-        final String SQL_SELECT_Notes = "select * from notes where lecture_id=? and filename=?";
-        return jdbcOp.queryForObject(SQL_SELECT_Notes, new NotesRowMapper(), lectureId, name);
-    }
-*/
 }

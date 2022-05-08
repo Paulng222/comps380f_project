@@ -4,28 +4,11 @@
         <title>Online Course</title>
     </head>
     <body>
-
-        <c:url var="logoutUrl" value="/cslogout"/>
-        <form action="${logoutUrl}" method="post">
-            <input type="submit" value="Log out" />
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-
-        <c:url var="addUser" value="/user/create"/>
-        <form action="${addUser}" method="post">
-            <input type="submit" value="Reg User" />
-        </form>
-
         <i><h1>Comps380f Course</h1></i>
 
-        <security:authorize access="hasRole('LECTURER')">
-            <h2>Users</h2>
-            <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
-        </security:authorize>
-
-
         <h2>Lectures</h2>
-        <security:authorize access="hasRole('LECTURER')">
+        <security:authorize access="hasRole('LECTURER') or
+                            principal.username=='${lecture.userName}'">
             <a href="<c:url value="/course/createLecture" />">Create a Lecture</a><br /><br />
         </security:authorize>
 
@@ -40,7 +23,8 @@
                         <c:out value="${lecture.subject}" /></a>
                     (Lecturer: <c:out value="${lecture.userName}" />)
                     &nbsp;
-                    <security:authorize access="hasRole('LECTURER')">
+                    <security:authorize access="hasRole('LECTURER') or
+                                        principal.username=='${lecture.userName}'">
                         [<a href="<c:url value="/course/editLecture/lectureId=${lecture.id}" />">Edit</a>]
                     </security:authorize> 
                     <security:authorize access="hasRole('LECTURER')">
@@ -51,14 +35,14 @@
             </c:otherwise>
         </c:choose>
         <br />     
-
+        
         <h2>Polls</h2>
-        <security:authorize access="hasRole('LECTURER')">
-            <a href="<c:url value="/course/poll/create" />">Create a Poll</a><br /><br />
-        </security:authorize>
+            <security:authorize access="hasRole('LECTURER')">
+                <a href="<c:url value="/course/poll/create" />">Create a Poll</a><br /><br />
+            </security:authorize>
         <c:choose>
             <c:when test="${fn:length(pollDatabase) == 0}">
-
+                
                 <i>There are no poll for the course.</i>
             </c:when>
             <c:otherwise>
@@ -72,5 +56,5 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-
+       
     </body>

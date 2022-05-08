@@ -12,7 +12,7 @@ CREATE TABLE user_roles (
     FOREIGN KEY (username) REFERENCES users(username)
 );
 
-INSERT INTO users VALUES ('sam', '{noop}sampw');
+INSERT INTO users(username, password) VALUES ('sam', '{noop}sampw');
 INSERT INTO user_roles(username, role) VALUES ('sam', 'ROLE_STUDENT');
 INSERT INTO user_roles(username, role) VALUES ('sam', 'ROLE_LECTURER');
 
@@ -66,6 +66,7 @@ CREATE TABLE poll_comments (
     poll_id INTEGER NOT NULL,
     username VARCHAR(50) NOT NULL,
     content VARCHAR(250),
+    created_at TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (poll_id) REFERENCES polls(id)
 );

@@ -30,4 +30,6 @@ public interface LectureRepository {
     public void deleteLectureComment(long commentId);
 
     public List<LectureComment> getLectureComment(long id);
+
+    public List<LectureComment> getUserAllLectureComment(String username);
 }
