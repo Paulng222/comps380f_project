@@ -80,6 +80,7 @@
                     <tr>
                         <th>Users</th>
                         <th>Comments</th>
+                        <th>Time</th>
                             <security:authorize access="hasRole('LECTURER')">
                             <th>Delete</th>
                             </security:authorize>
@@ -89,6 +90,7 @@
                         <tr>
                             <td>${comment.getUsername()} </td>
                             <td>${comment.getContent()} </td>
+                            <td>${comment.getCreatedAt()} </td>
                             <security:authorize access="hasRole('LECTURER')">
                                 <td><a href="<c:url value="/course/poll/${pollId}/comment/${comment.getId()}/delete"></c:url>">
                                         <c:out value="Delete"/>

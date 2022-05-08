@@ -95,32 +95,7 @@ public class PollRepositoryImpl implements PollRepository {
         final String sql_readLectureById = "SELECT * FROM polls WHERE id = ?";
         return jdbcOp.query(sql_readLectureById, new PollExtractor(), id);
     }
-/*
-  @Override
-    @Transactional
-    public void updateLecture(long lecture_id, String subject, String body,
-            List<MultipartFile> notes) throws IOException {
-        final String SQL_UPDATE_Lecture = "update lecture set subject=?, body=? where id=?";
-        final String SQL_INSERT_Notes
-                = "insert into notes (filename,content,content_type,lecture_id) values (?,?,?,?)";
-        jdbcOp.update(SQL_UPDATE_Lecture, subject, body, lecture_id);
-        System.out.println("Lecture " + lecture_id + " updated");
-        for (MultipartFile filePart : notes) {
-            if (filePart.getOriginalFilename() != null && filePart.getSize() > 0) {
-                LobHandler handler = new DefaultLobHandler();
-                jdbcOp.update(SQL_INSERT_Notes,
-                        new Object[]{filePart.getOriginalFilename(),
-                            new SqlLobValue(filePart.getInputStream(),
-                                    (int) filePart.getSize(), handler),
-                            filePart.getContentType(),
-                            lecture_id},
-                        new int[]{Types.VARCHAR, Types.BLOB, Types.VARCHAR, Types.INTEGER});
-                System.out.println("Notes " + filePart.getOriginalFilename()
-                        + " of Lecture " + lecture_id + " inserted");
-            }
-        }
-    }
-*/
+
     @Override
     @Transactional
     public void deletePoll(long id) {
@@ -247,9 +222,9 @@ public class PollRepositoryImpl implements PollRepository {
 
     @Override
     @Transactional
-    public long createPollComment(final long pollId, final String username, final String content)
+    public long createPollComment(final long pollId, final String username, final String content, final Date createdAt)
             throws IOException {
-        final String sql_insertPollComment = "INSERT INTO poll_comments (username, content, poll_id) VALUES (?, ?, ?)";
+        final String sql_insertPollComment = "INSERT INTO poll_comments (username, content, poll_id, created_at) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOp.update(new PreparedStatementCreator() {
             @Override
@@ -259,6 +234,7 @@ public class PollRepositoryImpl implements PollRepository {
                 ps.setString(1, username);
                 ps.setString(2, content);
                 ps.setLong(3, pollId);
+                ps.setTimestamp(4, new Timestamp(createdAt.getTime()));
                 return ps;
             }
         }, keyHolder);

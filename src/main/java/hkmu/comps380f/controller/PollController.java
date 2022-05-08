@@ -148,28 +148,7 @@ public class PollController extends HttpServlet {
         
 
         List<PollComment> commentsSet = pollRepo.getPollComment(pollId);
-   /*      List<Vote> voteList = poll.getVotes();
-        
-        List<String> userList = VoteRepo.findDistinctUsername();
- 
-        Integer[] voteOptionTotal = {0,0,0,0};
-        for(Vote vote:pollRepo.getTotalVotesOfPoll(pollId)){
-            //Vote lastestVote = VoteRepo.findFirstByPollIdAndUsernameOrderByCreatedAtDesc(pollId,username);
-            Integer option = vote.getVoteOption();
-            if(option == 1){
-                voteOptionTotal[0] += 1;
-            }
-            if(option == 2){
-                voteOptionTotal[1] += 1;
-            }
-            if(option == 3){
-                voteOptionTotal[2] += 1;
-            }
-            if(option == 4){
-                voteOptionTotal[3] += 1;
-            }
-        }
-   */    
+  
         
         //System.out.println("voteOptionTotal: "+pollRepo.getTotalVotesOfPoll(pollId));
         pollPage.addObject("histories", voteHistoryList);
@@ -216,7 +195,7 @@ public class PollController extends HttpServlet {
                                 @ModelAttribute("comment") CommentForm commentForm,
                                 Principal principal)
                     throws Exception{
-        pollRepo.createPollComment(pollId, principal.getName(), commentForm.getContent());      
+        pollRepo.createPollComment(pollId, principal.getName(), commentForm.getContent(), new Date());      
         return "redirect:..";
         
     }

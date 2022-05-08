@@ -25,7 +25,7 @@ public interface PollRepository {
 
     public long createVote(String username, Integer voteOption, Date createdAt, long pollId) throws IOException;
 
-    public long createPollComment(long pollId, String username, String content) throws IOException;
+    public long createPollComment(long pollId, String username, String content, Date createdAt) throws IOException;
 
     public void deletePollComment(long commentId);
 

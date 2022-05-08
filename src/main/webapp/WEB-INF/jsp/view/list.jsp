@@ -17,9 +17,10 @@
             <input type="submit" value="Reg User" />
         </form>
         <i><h1>Comps380f Course</h1></i>
-        <security:authorize access="hasRole('LECTURER')">
-            <a href="<c:url value="/course/poll/create" />">Create a Poll</a><br /><br />
+        <security:authorize access="hasAnyRole('LECTURER','STUDENT')">
+            <a href="<c:url value="/user/comment/list" />">Comment History</a><br /><br />
         </security:authorize>
+       
             
         <security:authorize access="hasRole('LECTURER')">
             <h2>Users</h2>
@@ -28,9 +29,7 @@
 
 
         <h2>Lectures</h2>
-        <security:authorize access="hasAnyRole('LECTURER','STUDENT')">
-            <a href="<c:url value="/user/comment/list" />">Comment History</a><br /><br />
-        </security:authorize>
+        
 
         <c:choose>
             <c:when test="${fn:length(lectureDatabase) == 0}">
