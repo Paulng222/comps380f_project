@@ -17,10 +17,13 @@ public class OnlineUser implements Serializable {
     public OnlineUser() {
     }
 
-    public OnlineUser(String username, String password, String[] roles) {
+    public OnlineUser(String username, String password, String[] roles, String fullname, String phone, String address) {
         this.username = username;
         this.password = "{noop}" + password;
         this.roles = new ArrayList<>(Arrays.asList(roles));
+        this.fullname = fullname;
+        this.phone = phone;
+        this.address = address;
     }
 
     public String getUsername() {
